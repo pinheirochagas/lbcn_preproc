@@ -26,7 +26,7 @@ for is = 1:length(subjects)
         el_selectivity_tmp = [subjVar, el_selectivity_tmp];
         
         % add ROL
-        fname = sprintf('%sROL/%s_%s_ROL.mat',dirs.result_dir, s, task);
+        fname = sprintf('%sROL/%s_%s_ROL.mat',dirs.paper_results, s, task);
         
         load(fname)
         cond_names = fieldnames(ROL);

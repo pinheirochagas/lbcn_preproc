@@ -23,7 +23,7 @@ plot_params.col(1:2,:) = [];
 try
     h = [];
     lineprops.col{1} = plot_params.col(e,:);
-    mseb(time,nanmean(data.plot_data),nanste(data.plot_data),lineprops,0);
+%     mseb(time,nanmean(data.plot_data),nanste(data.plot_data),lineprops,0);
     hold on
     h=plot(time,nanmean(data.plot_data),'LineWidth',plot_params.lw,'Color',plot_params.col(e,:));
     

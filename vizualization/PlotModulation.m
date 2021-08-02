@@ -67,7 +67,7 @@ if cfg.MarkerSize_mod
     marker_size = abs(cfg.ind).*round(cfg.MarkSizeEffect*abs(cfg.ind));
     marker_size(marker_size<=0) = 0.0001;
 else
-    marker_size = repmat(cfg.MarkerSize,size(elinfo,1),1);
+%     marker_size = repmat(cfg.MarkerSize,size(elinfo,1),1);
      marker_size = cfg.MarkerSize;
 
 end
@@ -94,30 +94,48 @@ for i = 1:length(views)
     ctmr_gauss_plot(cmcortex.(hemis{i}),[0 0 0], 0, hemis{i}, views{i})
     
     for ii = 1:size(coords_plot,1)
-        % Only plot on the relevant hemisphere
-        if ~isnan(col_idx(ii))
-            if (strcmp(hemis{i}, 'left') == 1 && strcmp(elinfo.LvsR(ii), 'R') == 1) || (strcmp(hemis{i}, 'right') == 1 && strcmp(elinfo.LvsR(ii), 'L') == 1)
+%         if ii ~= cfg.chan_highlight
+            % Only plot on the relevant hemisphere
+            if ~isnan(col_idx(ii))
+                if (strcmp(hemis{i}, 'left') == 1 && strcmp(elinfo.LvsR(ii), 'R') == 1) || (strcmp(hemis{i}, 'right') == 1 && strcmp(elinfo.LvsR(ii), 'L') == 1)
+                else
+%                     plot3(coords_plot(ii,1),coords_plot(ii,2),coords_plot(ii,3), 'o', 'MarkerSize', marker_size, 'MarkerFaceColor', colors_plot(col_idx(ii),:), 'MarkerEdgeColor', MarkerEdgeColor);
+                    plot3(coords_plot(ii,1),coords_plot(ii,2),coords_plot(ii,3), 'o', 'MarkerSize', marker_size(ii), 'MarkerFaceColor', colors_plot(col_idx(ii),:), 'MarkerEdgeColor', MarkerEdgeColor);
+                end
             else
-                plot3(coords_plot(ii,1),coords_plot(ii,2),coords_plot(ii,3), 'o', 'MarkerSize', marker_size, 'MarkerFaceColor', colors_plot(col_idx(ii),:), 'MarkerEdgeColor', MarkerEdgeColor);
-%                 plot3(coords_plot(ii,1),coords_plot(ii,2),coords_plot(ii,3), 'o', 'MarkerSize', marker_size(ii), 'MarkerFaceColor', colors_plot(col_idx(ii),:), 'MarkerEdgeColor', MarkerEdgeColor);
             end
-        else
-        end
+%         else
+%         end
     end
-    
     
     if ~isempty(cfg.chan_highlight)
         for hi = 1:length(cfg.chan_highlight)
-            if (strcmp(hemis{i}, 'left') && strcmpi(elinfo.LvsR{cfg.chan_highlight(hi)},'L'))
-                plot3(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), 'o', 'MarkerSize', cfg.marker_size_high, 'MarkerFaceColor', cfg.highlight_face_col(hi,:), 'MarkerEdgeColor', cfg.highlight_edge_col(hi,:));
-                text(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), cfg.colum_label{hi}, 'FontSize', cfg.label_font_size, 'Color', 'k', 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Interpreter', 'none');
-            elseif (strcmp(hemis{i}, 'right') && strcmpi(elinfo.LvsR{cfg.chan_highlight(hi)},'R'))
-                plot3(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), 'o', 'MarkerSize', cfg.marker_size_high, 'MarkerFaceColor', cfg.highlight_face_col(hi,:), 'MarkerEdgeColor', cfg.highlight_edge_col(hi,:));
-                text(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), cfg.colum_label{hi}, 'FontSize', cfg.label_font_size, 'Color', 'k', 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Interpreter', 'none');
-            else
+            for ii = 1:size(coords_plot,1)
+                % Only plot on the relevant hemisphere
+                if ~isnan(col_idx(ii))
+                    if (strcmp(hemis{i}, 'left') == 1 && strcmp(elinfo.LvsR(ii), 'R') == 1) || (strcmp(hemis{i}, 'right') == 1 && strcmp(elinfo.LvsR(ii), 'L') == 1)
+                    else
+                        plot3(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), 'o', 'MarkerSize', cfg.marker_size_high, 'MarkerFaceColor', cfg.highlight_face_col(hi,:), 'MarkerEdgeColor', cfg.highlight_edge_col(hi,:));
+                        %                 plot3(coords_plot(ii,1),coords_plot(ii,2),coords_plot(ii,3), 'o', 'MarkerSize', marker_size(ii), 'MarkerFaceColor', colors_plot(col_idx(ii),:), 'MarkerEdgeColor', MarkerEdgeColor);
+                    end
+                else
+                end
             end
         end
+    else
     end
+%     if ~isempty(cfg.chan_highlight)
+%         for hi = 1:length(cfg.chan_highlight)
+%             if (strcmp(hemis{i}, 'left') && strcmpi(elinfo.LvsR{cfg.chan_highlight(hi)},'L'))
+%                 plot3(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), 'o', 'MarkerSize', cfg.marker_size_high, 'MarkerFaceColor', cfg.highlight_face_col(hi,:), 'MarkerEdgeColor', cfg.highlight_edge_col(hi,:));
+% %                 text(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), cfg.colum_label{hi}, 'FontSize', cfg.label_font_size, 'Color', 'k', 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Interpreter', 'none');
+%             elseif (strcmp(hemis{i}, 'right') && strcmpi(elinfo.LvsR{cfg.chan_highlight(hi)},'R'))
+%                 plot3(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), 'o', 'MarkerSize', cfg.marker_size_high, 'MarkerFaceColor', cfg.highlight_face_col(hi,:), 'MarkerEdgeColor', cfg.highlight_edge_col(hi,:));
+% %                 text(coords_plot(cfg.chan_highlight(hi),1),coords_plot(cfg.chan_highlight(hi),2),coords_plot(cfg.chan_highlight(hi),3), cfg.colum_label{hi}, 'FontSize', cfg.label_font_size, 'Color', 'k', 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Interpreter', 'none');
+%             else
+%             end
+%         end
+%     end
     
     
         if cfg.plot_label 

@@ -30,7 +30,7 @@ end
 
 if ~isfield(subjVar, 'elinfo')
     data_format = GetFSdataFormat(sbj_name, 'Stanford');
-    subjVar = CreateSubjVar(sbj_name, dirs, data_format);
+    subjVar = CreateSubjVar(sbj_name);
 else
 end
 

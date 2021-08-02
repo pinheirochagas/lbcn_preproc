@@ -24,7 +24,7 @@ function [valsN, rgb, cmap] = vals2colormap(vals, colormap, crange)
 % Copyright Jason D. Yeatman, June 2012
 
 if ~exist('colormap','var') || isempty(colormap)
-    colormap = 'jet';
+    cmap = viridis;
     
 end
 
@@ -64,4 +64,5 @@ elseif iscell(vals)
         rgb{ii} = cmap(valsN, :);
     end
 end
+
 return

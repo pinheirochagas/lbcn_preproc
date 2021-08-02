@@ -34,21 +34,26 @@ nelec_p = length(phase_elecs);
 nelec_a = length(amp_elecs);
 
 % get both electrode names and electrode numbers
-load([dirs.data_root,filesep,'OriginalData',filesep,sbj_name,filesep,'global_',project_name,'_',sbj_name,'_',block_names{1},'.mat'])
-if iscell(phase_elecs)
-    elecnums_p = ChanNamesToNums(globalVar,phase_elecs);
-    elecnames_p = phase_elecs;
-else
-    elecnums_p = phase_elecs;
-    elecnames_p = ChanNumsToNames(globalVar,phase_elecs);
-end
-if iscell(amp_elecs) % if names, convert to numbers
-    elecnums_a = ChanNamesToNums(globalVar,amp_elecs);
-    elecnames_a = amp_elecs;
-else
-    elecnums_a = amp_elecs;
-    elecnames_a = ChanNumsToNames(globalVar,amp_elecs);
-end
+load([dirs.original_data filesep  sbj_name filesep 'subjVar_'  sbj_name '.mat']);
+elecnums_p = phase_elecs;
+elecnums_a = amp_elecs;
+elecnames_p = subjVar.elinfo.FS_label(elecnums_p);
+elecnames_a = subjVar.elinfo.FS_label(elecnums_a);
+% 
+% if iscell(phase_elecs)
+%     elecnums_p = ChanNamesToNums(subjVar,phase_elecs);
+%     elecnames_p = phase_elecs;
+% else
+%     elecnums_p = phase_elecs;
+%     elecnames_p = ChanNumsToNames(globalVar,phase_elecs);
+% end
+% if iscell(amp_elecs) % if names, convert to numbers
+%     elecnums_a = ChanNamesToNums(globalVar,amp_elecs);
+%     elecnames_a = amp_elecs;
+% else
+%     elecnums_a = amp_elecs;
+%     elecnames_a = ChanNumsToNames(globalVar,amp_elecs);
+% end
 
 % if pairing all phase_elecs to all amp_elecs, reshape them so one-to-one
 if strcmp(pairing,'all')

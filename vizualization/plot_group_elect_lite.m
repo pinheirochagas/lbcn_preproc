@@ -45,7 +45,9 @@ end
 try
     
     
-    xlim(plot_params.xlim)
+     xlim(plot_params.xlim)
+%     xlim([-3 .5])
+
     xlabel(plot_params.xlabel)
     ylabel(plot_params.ylabel)
     set(gca,'fontsize',plot_params.textsize)

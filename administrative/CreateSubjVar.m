@@ -1,4 +1,4 @@
-function [subjVar, subjVar_created]  = CreateSubjVar(sbj_name, comp_root, server_root, code_root)
+function [subjVar, subjVar_created]  = CreateSubjVar(sbj_name)
 % function [subjVar, subjVar_created]  = CreateSubjVar(sbj_name, dirs, data_format)
 
 %% Coordinate systems
@@ -10,7 +10,7 @@ function [subjVar, subjVar_created]  = CreateSubjVar(sbj_name, comp_root, server
 
 % Maybe remove this after
 [~, ~, data_format] = GetFSdataFormat(sbj_name, 'Stanford');
-dirs = InitializeDirs('MMR', sbj_name, comp_root, server_root, code_root); % 'Pedro_NeuroSpin2T'
+dirs = InitializeDirs('MMR', sbj_name); % 'Pedro_NeuroSpin2T'
 sprintf('creating subjVar for subject %s', sbj_name)
 
 

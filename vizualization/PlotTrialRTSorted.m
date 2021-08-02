@@ -41,6 +41,15 @@ end
 
 data.wave = convn(data.wave,gusWin','same');
 
+% Dirty fix CHANGE THAT!
+% Dirty fix CHANGE THAT!
+% Dirty fix CHANGE THAT!
+data.wave(data.trialinfo.RT>5,:) = [];
+data.trialinfo(data.trialinfo.RT>5,:) = [];
+% Dirty fix CHANGE THAT!
+% Dirty fix CHANGE THAT!
+% Dirty fix CHANGE THAT!
+
 % group data by conditions
 % if plot_params.multielec
 %     groupall = true;
@@ -95,7 +104,7 @@ end
 
 % smooth and plot data
 if plot_params.set_figure == 1
-    figureDim = [0 0 .4 1];
+    figureDim = [0 0 .2 .4];
     figure('units', 'normalized', 'outerposition', figureDim)
 else
 end
@@ -113,7 +122,7 @@ for ci = 1:ncategs
         imagesc(data.time,1:size(plot_data{ci},1),plot_data{ci},clims);
         colormap(cmap)
         hold on
-        plot(trial_data{ci}.RTLock,1:size(plot_data{ci},1),'.', 'MarkerSize', 10, 'Color', 'k')
+        plot(trial_data{ci}.RTLock,1:size(plot_data{ci},1),'.', 'MarkerSize', 6, 'Color', 'k')
         
         % Plot stimuli list
         if plot_params.plot_slist == 1

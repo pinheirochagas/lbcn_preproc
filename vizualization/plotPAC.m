@@ -20,9 +20,16 @@ end
 
 figure('Position',[200 200 400*length(conds) 500])
 
+
+for ci = 1:length(conds)
+    data_plot = abs(PAC.(conds{ci}).(['p',phase_elec,'_a',amp_elec]))';
+    max_caxis(ci) = prctile(data_plot(:), 97)
+end
+
 for ci = 1:length(conds)
     subplot(1,length(conds),ci)
-    imagesc(abs(PAC.(conds{ci}).(['p',phase_elec,'_a',amp_elec]))')
+    data_plot = abs(PAC.(conds{ci}).(['p',phase_elec,'_a',amp_elec]))';
+    imagesc(data_plot)
     axis xy
     hold on
     set(gca,'XTick',p_ticks)
@@ -30,6 +37,9 @@ for ci = 1:length(conds)
     set(gca,'XTickLabel',p_label)
     set(gca,'YTickLabel',a_label)
     set(gca,'FontSize',20)
+    colormap(cbrewer2('Reds'))
+    caxis([0 max(max_caxis)])
+
     % title('Math Trials')
     % colormap(jet)
     set(gcf,'color','w')
@@ -37,5 +47,6 @@ for ci = 1:length(conds)
     ylabel('Amp freq. (Hz)')
     colorbar
     title(conds{ci})
+    
 end
 suptitle(['Phase: ',phase_elec,'; Amp: ',amp_elec])

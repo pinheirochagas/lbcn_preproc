@@ -65,8 +65,20 @@ sort_tabulate(data_seeg.WMvsGM)
 sort_tabulate(data_seeg.LvsR)
 
 
+subjVar_all(strcmp(subjVar_all.DK_long_josef, 'OUT OF BRAIN'), :) = [];
+subjVar_all(strcmp(subjVar_all.DK_long_josef, 'EXCLUDE'), :) = [];
+
+subjVars = struct
+subjVars.elinfo = subjVar_all;
+
 cfg = getPlotCoverageCFG('full');
-PlotModulation(dirs, subjVar_all, cfg)
+cfg.views ={'lateral', 'lateral', 'ventral', 'ventral'}
+cfg.hemis = {'left', 'right', 'left', 'right'}
+cfg.subplots = [2, 2]
+cfg.alpha = 0.5
+PlotModulation(dirs, subjVars, cfg)
+
+
 
 % Plot coverage by task group
 col_group = 'task_group'; % or task_group

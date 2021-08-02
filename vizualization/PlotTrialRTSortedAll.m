@@ -116,9 +116,10 @@ if plot_params.save == true
         F(ei).colormap = [];
         close
     else
+        set(gca,'ytick',[])
         %                 fn_out = sprintf('%s/%s_%s_%s_%s_%slock_%s%s.png',plot_params.save_dir,sbj_name,data_all.label,project_name,freq_band,locktype,folder_name,plottag);
-        fn_out = sprintf('%s%s_%02d_%s_%s_%slock_ERP.png',plot_params.save_dir,sbj_name,el,project_name,freq_band,locktype);
-        savePNG(gcf, 300, fn_out)
+        fn_out = sprintf('%s%s_%02d_%s_%s_%slock_ERP.pdf',plot_params.save_dir,sbj_name,el,project_name,freq_band,locktype);
+        save2pdf(fn_out,gcf, 600)
         close
     end
 end

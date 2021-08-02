@@ -82,7 +82,7 @@ for ei = 1
     %     data_all = concatBlocks(sbj_name,block_names,dirs,el,datatype,concatfield,tag);
     data_all = concatBlocks(sbj_name,project_name,block_names,dirs,el,freq_band,datatype,concatfield,tag);
     
-
+    
     
     if plot_params.multielec
         groupall = true;
@@ -117,7 +117,7 @@ for ei = 1:length(elecs)
     %     data_all = concatBlocks(sbj_name,block_names,dirs,el,datatype,concatfield,tag);
     data_all = concatBlocks(sbj_name,project_name, block_names,dirs,el,freq_band,datatype,concatfield,tag);
     
-        % correct data.label
+    % correct data.label
     if plot_params.correct_label
         data_all.label = plot_params.FS_labels{el};
     else
@@ -131,7 +131,7 @@ for ei = 1:length(elecs)
     else
         tagchan = ' (good)';
     end
-        
+    
     if plot_params.multielec % if  multiple elecs in same figure (will group all conditions together)
         load([dirs.original_data filesep  sbj_name filesep 'subjVar_'  sbj_name '.mat']);
         
@@ -146,8 +146,8 @@ for ei = 1:length(elecs)
     else
         PlotTrialAvg(data_all,column,conds,plot_params);
         
-            
-            
+        
+        
         if strcmp(plot_params.label,'name')
             %             suptitle([data_all.label,tagchan, elect_select{ei}])
             suptitle([data_all.label,tagchan])
@@ -158,30 +158,32 @@ for ei = 1:length(elecs)
         %% Save
         if plot_params.save == true
             if isempty(plot_params.save_dir)
-%                 dir_out = '/Volumes/LBCN8T/Stanford/data/Results/Logo/S14_73_AY/Figures/BandData/HFB/stimlock/logo';
-%                 folder_name = 'logo';
+                %                 dir_out = '/Volumes/LBCN8T/Stanford/data/Results/Logo/S14_73_AY/Figures/BandData/HFB/stimlock/logo';
+                %                 folder_name = 'logo';
                 fn_out = sprintf('%s/%s_%s_%s_%s_%slock_%s%s.png',dir_out,sbj_name_generic,data_all.label,project_name,freq_band,locktype,folder_name,plottag);
                 savePNG(gcf, 300, fn_out)
                 fn_out = sprintf('%s/%s_%s_%s_%s_%slock_%s%s.pdf',dir_out,sbj_name_generic,data_all.label,project_name,freq_band,locktype,folder_name,plottag);
-%                 save2pdf(fn_out, gcf, 300)
+                % %                 save2pdf(fn_out, gcf, 300)
                 close
             else
-%                 fn_out = sprintf('%s/%s_%s_%s_%s_%slock_%s%s.png',plot_params.save_dir,sbj_name,data_all.label,project_name,freq_band,locktype,folder_name,plottag);
-                fn_out = sprintf('%s%s_%02d_%s_%s_%slock.png',plot_params.save_dir,sbj_name,el,project_name,freq_band,locktype);
-                savePNG(gcf, 300, fn_out)
+                y = ylim;
+                ylim([-0.3 max(y)])
+                %                 fn_out = sprintf('%s/%s_%s_%s_%s_%slock_%s%s.png',plot_params.save_dir,sbj_name,data_all.label,project_name,freq_band,locktype,folder_name,plottag);
+                fn_out = sprintf('%s%s_%02d_%s_%s_%slock.pdf',plot_params.save_dir,sbj_name,el,project_name,freq_band,locktype);
+                save2pdf(fn_out, gcf, 300)
                 close
             end
         end
-%         close
+        %         close
     end
-
+    
 end
 
 % Continued to increment to the hold on multiple elecs
 if plot_params.multielec  % if plotting multiple elecs, create legend based on elec #
     ylim([min(ymin) max(ymax)])
     plot([0 0],ylim,'Color', [0 0 0], 'LineWidth',2)
-%     leg = legend(h,elec_names);
+    %     leg = legend(h,elec_names);
     leg = legend(h,elec_loc);
     
     legend boxoff
@@ -196,11 +198,10 @@ if plot_params.multielec  % if plotting multiple elecs, create legend based on e
         if isempty(plot_params.save_dir)
             fn_out = sprintf('%s/%s_%s_%s_%s_%s_%slock.png',dir_out,sbj_name_generic,elec_names_all,title_conds,project_name,freq_band,locktype);
             savePNG(gcf, 300, fn_out)
-%             save2pdf(fn_out, gcf, 300)
             close
         else
             fn_out = sprintf('%s/%s_%s_%s_%s_%s_%slock.png',plot_params.save_dir,sbj_name,elec_names_all,title_conds,project_name,freq_band,locktype);
-            savePNG(gcf, 300, fn_out)
+            save2pdf(fn_out, gcf, 300)
             close
         end
     end
